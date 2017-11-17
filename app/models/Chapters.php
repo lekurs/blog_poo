@@ -17,6 +17,11 @@ class Chapters
     private $create_date;
     private $online;
 
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
+
     public function hydrate(array $datas)
     {
         foreach ($datas as $key => $data)
@@ -55,12 +60,12 @@ class Chapters
         return $this->online;
     }
 
-    public function setId($id)
+    public function setIdChapter($id)
     {
         $id = (int) $id;
         if($id>0)
         {
-            $this->id = $id;
+            $this->idChapter = $id;
         }
     }
 

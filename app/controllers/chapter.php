@@ -17,7 +17,7 @@ function getChapter($idChapter)
 
         $comment = new \blog\app\models\CommentsManager();
         $nbComment = $comment->nb_comment($idChapter);
-        $comments = $comment->showComments($idChapter);
+        $comments = $comment->showComments($idChapter);//false
     }
 
 //    $chapter->nb_comment($idChapter);

@@ -6,15 +6,16 @@
  * Time: 11:05
  */
 //
+require_once ('app/models/Chapters.php');
 require_once ('app/models/ChaptersManager.php');
 require_once ('app/models/CommentsManager.php');
 
 function listChapters()
 {
-    $Allchapters = new blog\app\models\ChaptersManager();
-    $chapters = $Allchapters->showChapters();
+    $chapterManager = new blog\app\models\ChaptersManager();
+   $chapters = $chapterManager->showChapters();
 
-    $comment = new blog\app\models\CommentsManager();
+    $commentManager = new blog\app\models\CommentsManager();
 
     require ('app/views/showChaptersView.php');
 }

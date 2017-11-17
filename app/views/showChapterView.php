@@ -39,12 +39,12 @@ ob_start();
         ?>
             <div class="liste-commentaires">
                 <p class="numero-comment"><?php echo $i++; ?></p>
-                <p class="log-comment"><?=  ucfirst($comment->username); ?></p>
-                <p class="detail-comment"><?= htmlentities($comment->comments); ?></p>
+                <p class="log-comment"><?=  ucfirst($comment['username']); ?></p>
+                <p class="detail-comment"><?= htmlentities($comment['comments']); ?></p>
                 <p class="warning">
-                    <input type="hidden" name="report" class="report" value="<?= $comment->report; ?>" />
-                    <input type="hidden" name="chapterId" class="chapterId" value="<?= $comment->chapter_id; ?>" />
-                    <input type="hidden" name="idComments" class="idComments" value="<?= $comment->id_comments; ?>" />
+                    <input type="hidden" name="report" class="report" value="<?= $comment['report']; ?>" />
+                    <input type="hidden" name="chapterId" class="chapterId" value="<?= $comment['chapter_id']; ?>" />
+                    <input type="hidden" name="idComments" class="idComments" value="<?= $comment['id_comments']; ?>" />
                     <i class="fa fa-exclamation-triangle" class="black-exclam"></i>
                 </p>
             </div>

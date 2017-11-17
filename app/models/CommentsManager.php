@@ -19,9 +19,9 @@ class CommentsManager extends Database
         $req = $db->prepare('SELECT c.id_comments AS id_comments, c.comments AS comments, c.report AS report, c.user_id AS user_id, c.chapter_id AS chapter_id, u.id_user AS id_user, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
         $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_OBJ);
-        $req->fetch();
-        return $req;
+        $req->setFetchMode(\PDO::FETCH_ASSOC);
+
+        return $req->fetchAll();
 
         $req->closeCursor();
     }

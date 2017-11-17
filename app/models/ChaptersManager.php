@@ -25,14 +25,11 @@ require_once ('Database.php');
     public function showChapters()
     {
         $db = $this->Connect();
-        $req = $db->prepare('SELECT id_chapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS date_creation FROM chapter where online = 1');
+        $req = $db->prepare('SELECT id_chapter as idChapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS create_date, online FROM chapter where online = 1');
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_OBJ);
-        $req->fetch();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'Chapters');
 
-        return $req;
-
-        $req->closeCursor();
+        return $req->fetchAll();
     }
 
      /**
@@ -48,9 +45,7 @@ require_once ('Database.php');
          $req->execute();
          $req->setFetchMode(\PDO::FETCH_OBJ);
 
-         return $req;
-
-         $req->closeCursor();
+         return $req->fetchAll();
      }
 
      /**
@@ -65,8 +60,6 @@ require_once ('Database.php');
          $req->rowCount();
 
          return $req;
-
-         $chapters->closeCursor();
      }
 
      /**
@@ -109,8 +102,6 @@ require_once ('Database.php');
          $req = $req->fetch(\PDO::FETCH_ASSOC);
 
          return $req;
-
-         $req->closeCursor();
      }
 
      /**
