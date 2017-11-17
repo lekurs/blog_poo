@@ -1,0 +1,7 @@
+/app/models/Config.php
+old/
+.idea/
+.idea/inspectionProfiles/
+.idea/workspace.xml
+blog_ecrivain.sql
+uml.txt
