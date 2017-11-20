@@ -13,10 +13,15 @@ require_once ('app/models/Database.php');
 class CommentsManager extends Database
 {
 
+    /**
+     * @param $idChapter
+     * @return array
+     */
+
     public function showComments($idChapter)
     {
         $db = $this->Connect();
-        $req = $db->prepare('SELECT c.id_comments AS id_comments, c.comments AS comments, c.report AS report, c.user_id AS user_id, c.chapter_id AS chapter_id, u.id_user AS id_user, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
+        $req = $db->prepare('SELECT c.id_comments AS idComments, c.comments AS comments, c.report AS report, c.user_id AS userId, c.chapter_id AS chapterId, u.id_user AS id_user, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
         $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
         $req->execute();
         $req->setFetchMode(\PDO::FETCH_ASSOC);
@@ -26,15 +31,17 @@ class CommentsManager extends Database
         $req->closeCursor();
     }
 
+    /**
+     * @param $chapter
+     * @return int
+     */
+
     public function nb_comment($chapter)
     {
         $db = $this->Connect();
+        $req= $db->prepare('SELECT id_comments AS idComments, comments AS comments, report AS report, user_id AS userId, chapter_id AS chapterId FROM comments WHERE chapter_id = ' . $chapter);
+        $req->execute(array($chapter));
 
-        $nb_comments = $db->prepare('SELECT * FROM comments WHERE chapter_id = ' . $chapter);
-        $nb_comments->execute(array($chapter));
-
-        $count_comment = $nb_comments->rowCount();
-
-        return $count_comment;
+        return $req->rowCount();
     }
 }

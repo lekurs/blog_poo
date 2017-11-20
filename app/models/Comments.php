@@ -11,6 +11,13 @@ namespace blog\app\models;
 
 class Comments
 {
+    /**
+     * @var idComments
+     * @var $comment
+     * @var $report
+     * @var userId
+     * @var chapterId
+     */
     private $idComments;
     private $comments;
     private $report;
