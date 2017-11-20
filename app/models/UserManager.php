@@ -22,7 +22,7 @@ class UserManager extends Database
      * @return array
      */
 
-    function login($email)
+    public function login($email)
     {
         $db = $this->Connect();
 
@@ -41,23 +41,24 @@ class UserManager extends Database
      * @param User $user
      */
 
-    function inscription(User $user)
+    public function inscription(User $user)
     {
-      $db = $this->Connect();
-      $req = $db->prepare('INSERT INTO user (username, password, email, role) VALUES (:username, :password, :email, :role)');
-      $req->bindValue('username', $user->username(), \PDO::PARAM_STR);
-      $req->bindValue('password', $user->password(), \PDO::PARAM_STR);
-      $req->bindValue('email', $user->email(), \PDO::PARAM_STR);
-      $req->bindValue('role', $user->role(), \PDO::PARAM_INT);
-      $req->execute();
+          $db = $this->Connect();
+          $req = $db->prepare('INSERT INTO user (username, password, email, role) VALUES (:username, :password, :email, :role)');
+          $req->bindValue('username', $user->username(), \PDO::PARAM_STR);
+          $req->bindValue('password', $user->password(), \PDO::PARAM_STR);
+          $req->bindValue('email', $user->email(), \PDO::PARAM_STR);
+          $req->bindValue('role', $user->role(), \PDO::PARAM_INT);
+          $req->execute();
 
+          $req->closeCursor();
     }
 
     /**
      * @return int
      */
 
-    function getMaxUsers()
+    public function getMaxUsers()
     {
         $db = $this->Connect();
         $req = $db->prepare('SELECT * FROM user');
@@ -66,5 +67,16 @@ class UserManager extends Database
         return $req->rowCount();
     }
 
+    /**
+     * @return array
+     */
 
+    public function getLastUser()
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('SELECT * FROM user ORDER BY id_user DESC LIMIT 0,1');
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
+        return $req->fetchAll();
+    }
 }

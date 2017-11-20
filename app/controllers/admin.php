@@ -6,15 +6,25 @@
  * Time: 13:42
  */
 
-//require ('app/models/menus_Model.php');
+use \blog\app\models;
 
 function adminIndex()
 {
-    $menu = getMenus();
-    $chapitre = getChapters();
-    $chapterOffline = chapterOffline();
-    $maxUser = getMaxUsers();
-    $getReports = countReportTotal();
+    $menuManager = new \blog\app\models\MenusManager();
+    $menu = $menuManager->getMenus();
+    $chapterManager = new \blog\app\models\ChaptersManager();
+    $chapters = $chapterManager->showChapters();
+
+    $commentManager = new models\CommentsManager();
+
+    $chapterOffline = $chapterManager->chapterOffline();
+
+    $countChapter = $chapterManager->countChapter();
+    $reportComments = $commentManager->countAllReport();
+
+    $userManager = new models\UserManager();
+    $lastUser = $userManager->getLastUser();
+
     require ('app/views/adminView.php');
 }
 
@@ -39,36 +49,53 @@ function adminDelComm($comm)
 
 function adminPostChapter()
 {
-    $menu = getMenus();
-    $getReports = countReportTotal();
+    $menuManager = new \blog\app\models\MenusManager();
+    $menu = $menuManager->getMenus();
+
+    $commentManager = new models\CommentsManager();
+    $reportComments = $commentManager->countAllReport();
+
     require ('app/views/adminPostView.php');
 }
 
 function postNewChapter($title, $content, $online)
 {
-    $post = insertPost($title, $content, $online);
+    $chapter = new models\Chapters(['title' =>$title, 'chapter' => $content, 'online' => $online]);
+    $chapterManager = new models\ChaptersManager();
+    $chapterManager->addChapter($chapter);
 
     header('Location:index.php?action=admin');
 }
 
 function updateChapter($chapterId)
 {
-    $menu = getMenus();
-    $chap = getChapter($chapterId);
-    $getReports = countReportTotal();
+    $menuManager = new \blog\app\models\MenusManager();
+    $menu = $menuManager->getMenus();
+
+    $chapterManager = new models\ChaptersManager();
+    $chap = $chapterManager->showChapter($chapterId);
+
+    $commentsManager = new models\CommentsManager();
+    $report = $commentsManager->countReportTotal();
     require ('app/views/adminUpdateChapterView.php');
 }
 
-function adminUpdateChapter($title, $chapter, $online, $chapterId)
+function adminUpdateChapter($chapterId, $title, $online, $chapter)
 {
-    $chapUpdate = updatePost($title, $chapter, $online, $chapterId);
-    header('Location: index.php?action=admin');
+    $upChap = new blog\app\models\Chapters(['idChapter' => $chapterId, 'title' => $title, 'online' => $online, 'chapter' => $chapter]);
+
+    $chapterManager = new blog\app\models\ChaptersManager();
+    $update = $chapterManager->updateChapter($upChap);
+
+    header('Location: admin.php');
 }
 
 function adminDelChapter($chapterId)
 {
-    $delChap = delChapter($chapterId);
-    header('Location:index.php?action=admin');
+    $delChap = new models\Chapters(['idChapter' => $chapterId]);
+    $chapterManager = new models\ChaptersManager();
+    $del = $chapterManager->delChapter($delChap);
+
 }
 
 function adminUpdateComment($idComment, $comment)

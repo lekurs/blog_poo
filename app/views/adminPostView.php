@@ -15,12 +15,11 @@ ob_start();
     <div class="admin-container">
         <div class="menus">
             <?php
-            foreach($menu as $menus)
-            {
+            foreach($menu as $menus) :
                 ?>
                 <p><a href="<?php echo $menus['lien']; ?>" class="menus-btn"><?php echo $menus['menus']; ?></a></p>
                 <?php
-            }
+            endforeach;
             ?>
         </div>
         <div class="admin">

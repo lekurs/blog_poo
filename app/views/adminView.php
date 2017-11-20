@@ -15,12 +15,12 @@ ob_start();
     <div class="admin-container">
         <div class="menus">
             <?php
-                foreach($menu as $menus)
-                {
+                foreach($menu as $datas) :
+                    $menus = new \blog\app\models\Menus($datas);
             ?>
-                <p><a href="<?= $menus['lien']; ?>" class="menus-btn"><?= $menus['menus']; ?></a></p>
+                <p><a href="<?= $menus->lien(); ?>" class="menus-btn"><?= $menus->menus(); ?></a></p>
             <?php
-                }
+                endforeach;
             ?>
         </div>
         <div class="admin">
@@ -41,26 +41,26 @@ ob_start();
                             </tr>
                             </thead>
                             <?php
-                            foreach($chapitre as $chapitres)
-                            {
+                            foreach($chapters as $datas) :
+                                $chapter = new \blog\app\models\Chapters($datas);
                                 ?>
                                 <tbody>
                                 <tr class="inter-chapter-table">
-                                    <td class="admin-title-chapter-table"><?php echo $chapitres['title']; ?></td>
-                                    <td class="admin-resume-chapter-table"><?php echo nl2br(substr($chapitres['chapter'], 0, 200)); ?></td>
-                                    <td class="admin-comm-table"><?php echo nb_comment($chapitres['id_chapter']);?></td>
-                                    <td class="admin-report-table"><?php echo countReportByChapter($chapitres['id_chapter']); ?></td>
-                                    <td class="admin-chapter-update"><a href="index.php?action=adminupdatepost&amp;c=<?php echo $chapitres['id_chapter']; ?>" ><i class="fa fa-pencil"></i></a></td>
-                                    <td class="admin-chapter-delete"><a href="index.php?action=admin&amp;del=<?php echo $chapitres['id_chapter']; ?>"><i class="fa fa-trash"></i></a></td>
+                                    <td class="admin-title-chapter-table"><?= $chapter->title(); ?></td>
+                                    <td class="admin-resume-chapter-table"><?= nl2br(substr($chapter->chapter(), 0, 200)); ?></td>
+                                    <td class="admin-comm-table"><?= $commentManager->nb_comment($chapter->idChapter());?></td>
+                                    <td class="admin-report-table"><?= $commentManager->countReportByChapter($chapter->idChapter()); ?></td>
+                                    <td class="admin-chapter-update"><a href="index.php?action=adminupdatepost&amp;c=<?=$chapter->idChapter(); ?>" ><i class="fa fa-pencil"></i></a></td>
+                                    <td class="admin-chapter-delete"><a href="index.php?action=admin&amp;del=<?= $chapter->idChapter(); ?>&suppr=ok"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 </tbody>
                                 <?php
-                            }
+                            endforeach;
                             ?>
                         </table>
                     </div>
-                    <p>Total chapitres en ligne : <?php echo countChapter(); ?></p>
-                    <p>Total messages signalés : <?php echo countReportTotal(); ?></p>
+                    <p>Total chapitres en ligne : <?= $countChapter; ?></p>
+                    <p>Total messages signalés : <?= $reportComments; ?></p>
                 </div>
                 <div class="admin-chapter-offline">
                     <h3>Vos chapitres à finaliser</h3>
@@ -77,29 +77,35 @@ ob_start();
                             </tr>
                             </thead>
                             <?php
-                            foreach($chapterOffline as $chapitresOffline)
-                            {
+                            foreach($chapterOffline as $datas) :
+                            $chapterOffline = new \blog\app\models\Chapters($datas);
                                 ?>
                                 <tbody>
                                     <tr class="inter-chapter-table">
-                                        <td class="admin-title-chapter-table"><?php echo $chapitresOffline['title']; ?></td>
-                                        <td class="admin-resume-chapter-table"><?php echo substr($chapitresOffline['chapter'], 0, 200); ?></td>
-                                        <td class="admin-comm-table"><?php echo nb_comment($chapitresOffline['id_chapter']);?></td>
-                                        <td class="admin-report-table"><?php echo countReportByChapter($chapitresOffline['id_chapter']); ?></td>
-                                        <td class="admin-chapter-update"><a href="index.php?action=adminupdatepost&amp;c=<?php echo $chapitresOffline['id_chapter']; ?>" ><i class="fa fa-pencil"></i></a></td>
-                                        <td class="admin-chapter-delete"><a href="index.php?action=admin&amp;del=<?php echo $chapitres['id_chapter']; ?>"><i class="fa fa-trash"></i></a> </td>
+                                        <td class="admin-title-chapter-table"><?= $chapterOffline->title(); ?></td>
+                                        <td class="admin-resume-chapter-table"><?= substr($chapterOffline->chapter(), 0, 200); ?></td>
+                                        <td class="admin-comm-table"><?= $commentManager->nb_comment($chapterOffline->idChapter());?></td>
+                                        <td class="admin-report-table"><?= $commentManager->countReportByChapter($chapterOffline->idChapter()); ?></td>
+                                        <td class="admin-chapter-update"><a href="index.php?action=adminupdatepost&amp;c=<?=$chapterOffline->idChapter(); ?>" ><i class="fa fa-pencil"></i></a></td>
+                                        <td class="admin-chapter-delete"><a href="index.php?action=admin&amp;del=<?= $chapterOffline->idChapter(); ?>&suppr=ok"><i class="fa fa-trash"></i></a> </td>
                                     </tr>
                                 </tbody>
                                 <?php
-                            }
+                            endforeach;
                             ?>
                         </table>
                     </div>
                 </div>
                 <div class="admin-user">
                     <h3>Utilisateurs</h3>
-                    <p>Dernier utilisateur enregistré : <?php echo getLastUser(); ?></p>
-                    <p>Nombre d'utilisateurs : <?php echo getMaxUsers(); ?></p>
+                    <?php foreach ($lastUser as $datas) :
+                    $user = new \blog\app\models\User($datas);
+                    ?>
+                    <p>Dernier utilisateur enregistré : <?= $user->username(); ?></p>
+                    <?php
+                    endforeach;
+                    ?>
+                    <p>Nombre d'utilisateurs : <?= $userManager->getMaxUsers(); ?></p>
                 </div>
             </div>
         </div>

@@ -62,4 +62,25 @@ class CommentsManager extends Database
         $req->execute();
         $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
     }
+
+    public function countReportByChapter($idChapter)
+    {
+        $db = $this->Connect();
+
+        $req = $db->prepare('SELECT * FROM comments WHERE chapter_id = :idChapter');
+        $req->bindValue('idChapter', $idChapter, \PDO::PARAM_INT);
+        $req->execute();
+
+        return $req->rowCount();
+    }
+
+    public function countAllReport()
+    {
+        $db = $this->Connect();
+
+        $req = $db->prepare('SELECT * FROM comments WHERE report = 1');
+        $req->execute();
+
+        return $req->rowCount();
+    }
 }

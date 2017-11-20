@@ -14,29 +14,29 @@ ob_start();
     <div class="admin-container">
         <div class="menus">
             <?php
-            foreach($menu as $menus)
-            {
+            foreach($menu as $menus) :
+
                 ?>
                 <p><a href="<?php echo $menus['lien']; ?>" class="menus-btn"><?php echo $menus['menus']; ?></a></p>
                 <?php
-            }
+            endforeach;
             ?>
         </div>
         <div class="admin">
             <?php
-            foreach($chap as $chapters)
-            {
+            foreach($chap as $datas) :
+            $chapter = new \blog\app\models\Chapters($datas);
             ?>
             <h2>Chapitre à modifier :</h2>
-            <form action="index.php?action=adminupdatepost&amp;c=<?= $chapters['id_chapter'];?>&amp;up=ok" method="post">
-                <input type="hidden" name="idChapter" id="idChapter" value="<?php echo $chapters['id_chapter']; ?>" />
-                <input type="text" name="title" id="title" placeholder="Titre :" value="<?php echo $chapters['title']; ?>"/>
-                <textarea id="chapitre_area" name="chapitre_area" placeholder="Votre texte"><?php echo $chapters['chapter']; ?></textarea>
+            <form action="index.php?action=adminupdatepost&amp;c=<?= $chapter->idChapter();?>&amp;up=ok" method="post">
+                <input type="hidden" name="idChapter" id="idChapter" value="<?= $chapter->idChapter(); ?>" />
+                <input type="text" name="title" id="title" placeholder="Titre :" value="<?= $chapter->title(); ?>"/>
+                <textarea id="chapitre_area" name="chapitre_area" placeholder="Votre texte"><?= $chapter->chapter(); ?></textarea>
                 <div class="check">
                     <div><p>Souhaitez vous mettre en ligne ce chapitre ?</p></div>
                     <div class="contain-checkbox">
                         <label class="switch">
-                            <input type="checkbox" value="online" name="online" id="online" checked <?php if($chapters['online'] = 1) { ?>checked<?php } ; ?>/>
+                            <input type="checkbox" value="online" name="online" id="online" checked <?php if($chapter->online() === 1) { ?>checked<?php } ; ?>/> <!-- voir comment modifier ça -->
                             <div class="slider round">
                         </label>
                     </div>
@@ -47,7 +47,7 @@ ob_start();
         </p>
         </form>
         <?php
-        }
+        endforeach;
         ?>
     </div>
 </section>

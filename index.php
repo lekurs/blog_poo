@@ -143,7 +143,7 @@ try{
                     $chapter = $_POST['chapitre_area'];
                     $chapterId = htmlspecialchars($_POST['idChapter']);
 
-                    adminUpdateChapter($title, $chapter, $online, $chapterId);
+                    adminUpdateChapter($chapterId, $title, $online, $chapter);
                 }
             }
         }
