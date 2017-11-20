@@ -15,6 +15,6 @@ class Autoload
     }
 
     static function autoloader($classname) {
-        require ($classname. '.php');
+        require $classname. '.php';
     }
 }

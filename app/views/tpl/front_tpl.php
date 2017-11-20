@@ -5,6 +5,7 @@
  * Date: 10/11/2017
  * Time: 10:41
  */
+$allReports = new \blog\app\models\CommentsManager();
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +94,7 @@
                                  }
                             ?>
                         </p>
-                        <p class="badge-comment"><a href="index.php?action=adminreport" class="btn-badge-comment"><span class="nb-comments"><?= $getReports; ?></span> </a> </p>
+                        <p class="badge-comment"><a href="index.php?action=adminreport" class="btn-badge-comment"><span class="nb-comments"><?= $allReports->countReportTotal(); ?></span> </a> </p>
                         <p class="disconnect"><a href="index.php?action=dc&amp;dc=ok"><i class="fa fa-times-circle"></i></a></p>
                         <?php
                     }
@@ -109,7 +110,7 @@
                     ?>
                 </div>
                 <div id="login-form">
-                    <form id="login_form" action="index.php?action=logok" method="post">
+                    <form id="login_form" action="index.php?action=login" method="post">
                         <div id="form">
                             <p class="logo-login"><i class="fa fa-envelope" id="envelope-login"></i> <input type="email" name="email" id="email" placeholder="Email" /><span class="close-form"  id="close"><i class="fa fa-times-circle fa-2x"></i></span></p>
                             <p class="logo-password"><i class="fa fa-lock"></i> <input type="password" placeholder="password" name="pass" id="password" /></p>

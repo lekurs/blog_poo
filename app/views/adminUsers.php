@@ -6,7 +6,6 @@
  * Time: 11:47
  */
 
-session_start();
 $title = 'Administration des utilisateurs';
 
 ob_start();

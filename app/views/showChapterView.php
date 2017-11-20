@@ -5,7 +5,7 @@
  * Date: 02/11/2017
  * Time: 09:09
  */
-session_start();
+
 $title = 'Billet simple pour l\'Alaska - Chapitre : ';
 ob_start();
 ?>
@@ -43,8 +43,8 @@ ob_start();
                 <p class="detail-comment"><?= htmlentities($comment['comments']); ?></p>
                 <p class="warning">
                     <input type="hidden" name="report" class="report" value="<?= $comment['report']; ?>" />
-                    <input type="hidden" name="chapterId" class="chapterId" value="<?= $comment['chapter_id']; ?>" />
-                    <input type="hidden" name="idComments" class="idComments" value="<?= $comment['id_comments']; ?>" />
+                    <input type="hidden" name="chapterId" class="chapterId" value="<?= $comment['chapterId']; ?>" />
+                    <input type="hidden" name="idComments" class="idComments" value="<?= $comment['idComments']; ?>" />
                     <i class="fa fa-exclamation-triangle" class="black-exclam"></i>
                 </p>
             </div>

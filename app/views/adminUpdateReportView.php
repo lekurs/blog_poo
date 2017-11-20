@@ -6,7 +6,6 @@
  * Time: 14:16
  */
 
-session_start();
 $title = 'Modification du commentaire N° ' . $_GET['comm'];
 ob_start();
 

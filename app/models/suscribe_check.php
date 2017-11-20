@@ -12,7 +12,8 @@ require('Database.php');
 
 if(isset($_POST['email_suscribe']) && !empty($_POST['email_suscribe'])) {
 
-    $db = connect_db();
+    $connect = new Database();
+    $db = $connect->Connect();
     $email = htmlspecialchars(strtolower($_POST['email_suscribe']));
     $req = $db->prepare('SELECT email FROM user WHERE email = :email');
     $req->execute(array('email' => $email));

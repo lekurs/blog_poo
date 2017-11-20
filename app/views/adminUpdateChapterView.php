@@ -5,7 +5,7 @@
  * Date: 13/11/2017
  * Time: 10:13
  */
-session_start();
+
 $title = 'Administration - Mise à jour du chapitre';
 
 ob_start();

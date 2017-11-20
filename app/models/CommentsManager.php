@@ -44,4 +44,13 @@ class CommentsManager extends Database
 
         return $req->rowCount();
     }
+
+    public function countReportTotal()
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('SELECT ch.id_chapter AS idChapter,  comm.chapter_id AS chapterId, ch.title AS title FROM comments comm INNER JOIN chapter ch ON ch.id_chapter = comm.chapter_id WHERE comm.report = 1');
+        $req->execute();
+
+        return $req->rowCount();
+    }
 }

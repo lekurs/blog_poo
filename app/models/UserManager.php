@@ -8,7 +8,7 @@
 
 namespace blog\app\models;
 
-require_once ('app/models/Database.php');
+require_once ('Database.php');
 
 /**
  * Gestion des utilisateurs BDD
@@ -19,7 +19,7 @@ class UserManager extends Database
      * @param $email
      * @param $password
      */
-    function login($email, $password)
+    function login($email)
     {
         $db = $this->Connect();
 
@@ -30,18 +30,7 @@ class UserManager extends Database
         if($req->rowCount() != 0)
         {
             $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
-            $passDB = $req->password;
-
-            if(password_verify($password, $passDB))
-            {
-                session_start();
-                $_SESSION['login'] = $log['username'];
-                $_SESSION['email']= $log['email'];
-                $_SESSION['id'] = $log['id_user'];
-                $_SESSION['rank'] = $log['role'];
-
-                setcookie('login', $_SESSION['email'], time() + 365*24*3600, null, null, false, true);
-            }
+            return $req->fetchAll();
         }
     }
 
@@ -63,9 +52,7 @@ class UserManager extends Database
       $req->bindValue('role', $role, \PDO::PARAM_INT);
       $req->execute();
 
-      $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
-
-      return $req->fetchAll();
+      return $req;
     }
 
     /**

@@ -5,7 +5,7 @@
  * Date: 13/11/2017
  * Time: 09:39
  */
-session_start();
+
 $title = 'Administration - Poster un nouveau chapitre';
 
 ob_start();

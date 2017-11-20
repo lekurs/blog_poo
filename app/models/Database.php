@@ -17,5 +17,6 @@ class Database extends Config
     {
         $db = new \PDO('mysql:host=' . $this->host . '; dbname=' . $this->dbname.'; charset=utf8', $this->user, $this->password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         return $db;
+        throw new \Exception('erreur');
     }
 }

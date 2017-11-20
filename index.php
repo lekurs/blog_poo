@@ -5,20 +5,21 @@
  * Date: 10/11/2017
  * Time: 11:21
  */
+session_start();
 
 //require ('app/controllers/chapters.php');
-//require ('app/controllers/login.php');
+require ('app/controllers/user.php');
 require ('app/controllers/chapter.php');
 //require ('app/controllers/admin.php');
 require ('app/controllers/chapters.php');
 
-//require('app/models/Autoload.php');
-//\blog\app\models\Autoload::register();
+require'app/models/Autoload.php';
+\blog\app\models\Autoload::register();
 
 try{
     if(isset($_GET['action'])) {
         if ($_GET['action'] == 'listChapters') {
-//            $chapters = new blog\app\models\Chapters_Models();
+//            $chapters = new blog\app\models\Chapters();
 //            $chapters->getChapters();
         }
         elseif ($_GET['action'] == 'listChapter') {
@@ -31,13 +32,13 @@ try{
                 suscribe($_POST['email_suscribe'], $_POST['password'], $_POST['username']);
             }
         }
-        elseif ($_GET['action'] == 'logok') {
-            echo $_POST['pass'];
+        elseif ($_GET['action'] == 'login') {
             if (!empty($_POST['email']) && !empty($_POST['pass'])) {
                 $email = htmlspecialchars(strtolower($_POST['email']));
                 $pass = htmlspecialchars($_POST['pass']);
                 $passHash = htmlspecialchars(password_hash($_POST['pass'], PASSWORD_DEFAULT));
                 login($email, $pass);
+
             }
         }
         elseif ($_GET['action'] == 'register') {
@@ -47,7 +48,7 @@ try{
                 $email = htmlspecialchars(strtolower($_POST['email_suscribe']));
                 $role = 2;
 
-                suscribeUser($username, $password, $email, $role);
+                suscribe($username, $password, $email, $role);
             }
         }
         elseif($_GET['action'] == 'dc' && $_GET['dc'] == 'ok')

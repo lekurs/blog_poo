@@ -5,7 +5,7 @@
  * Date: 12/11/2017
  * Time: 13:37
  */
-session_start();
+
 
 $title = 'Administration - Blog Billet pour l\'Alaska';
 
