@@ -21,14 +21,12 @@ class CommentsManager extends Database
     public function showComments($idChapter)
     {
         $db = $this->Connect();
-        $req = $db->prepare('SELECT c.id_comments AS idComments, c.comments AS comments, c.report AS report, c.user_id AS userId, c.chapter_id AS chapterId, u.id_user AS id_user, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
+        $req = $db->prepare('SELECT c.id_comments AS idComments, c.comments AS comments, c.report AS report, c.user_id AS userId, c.chapter_id AS chapterId, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
         $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_ASSOC);
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
 
         return $req->fetchAll();
-
-        $req->closeCursor();
     }
 
     /**
@@ -52,5 +50,16 @@ class CommentsManager extends Database
         $req->execute();
 
         return $req->rowCount();
+    }
+
+    public function postComment(Comments $comments)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('INSERT INTO comments (comments, user_id, chapter_id) VALUES (:comments, :userId, :chapterId)');
+        $req->bindValue('comments', $comments->comments(), \PDO::PARAM_STR);
+        $req->bindValue('userId', $comments->userId(), \PDO::PARAM_INT);
+        $req->bindValue('chapterId', $comments->chapterId(), \PDO::PARAM_INT);
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
     }
 }

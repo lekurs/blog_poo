@@ -7,14 +7,14 @@
  */
 session_start();
 
-//require ('app/controllers/chapters.php');
-require ('app/controllers/user.php');
-require ('app/controllers/chapter.php');
-//require ('app/controllers/admin.php');
-require ('app/controllers/chapters.php');
-
 require'app/models/Autoload.php';
 \blog\app\models\Autoload::register();
+
+
+require ('app/controllers/user.php');
+require ('app/controllers/chapter.php');
+require ('app/controllers/admin.php');
+require ('app/controllers/chapters.php');
 
 try{
     if(isset($_GET['action'])) {

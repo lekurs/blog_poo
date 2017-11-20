@@ -5,10 +5,8 @@
  * Date: 10/11/2017
  * Time: 11:05
  */
-//
-//require_once ('app/models/Chapters.php');
-require_once ('app/models/ChaptersManager.php');
-require_once ('app/models/CommentsManager.php');
+
+use blog\app\models;
 
 function listChapters()
 {

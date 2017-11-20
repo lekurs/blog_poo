@@ -22,7 +22,13 @@ class Comments
     private $comments;
     private $report;
     private $userId;
-    private $chapterId;
+    private $chapter_id;
+    private $username;
+
+    public function __construct(array $datas)
+    {
+        $this->hydrate($datas);
+    }
 
     /**
      * @param array $datas
@@ -83,7 +89,12 @@ class Comments
 
     public function chapterId()
     {
-        return $this->chapterId;
+        return $this->chapter_id;
+    }
+
+    public function username()
+    {
+        return $this->username;
     }
 
     /**
@@ -133,6 +144,25 @@ class Comments
         if($userId > 0)
         {
             $this->userId = $userId;
+        }
+    }
+
+    public function setUsername($username)
+    {
+        if(is_string($username))
+        {
+            $this->username = $username;
+        }
+    }
+
+    public function setChapterId($chapterId)
+    {
+        $chapterId = (int)$chapterId;
+        {
+            if($chapterId>0)
+            {
+                $this->chapter_id = $chapterId;
+            }
         }
     }
 }

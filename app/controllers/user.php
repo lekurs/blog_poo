@@ -6,8 +6,7 @@
  * Time: 09:55
  */
 
-//require_once ('app/models/User.php');
-require_once ('app/models/UserManager.php');
+use blog\app\models;
 
 function login($email, $password)
 {
@@ -34,15 +33,15 @@ function login($email, $password)
 
 function logOut()
 {
-    session_start();
     session_destroy();
     header('Location: index.php?dc=ok');
 }
 
 function suscribe($username, $password, $email, $role)
 {
+    $user = new \blog\app\models\User(['username'=>$username, 'password'=>$password, 'email' => $email, 'role' => $role]);
     $userManager = new \blog\app\models\UserManager();
-    $userManager->inscription($username,$password, $email, $role);
+    $userManager->inscription($user);
 
     header('Location: index.php?adduser=ok');
 }

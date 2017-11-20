@@ -6,7 +6,9 @@
  * Time: 14:30
  */
 
-require ('app/models/ChaptersManager.php');
+use blog\app\models;
+
+
 
 function getChapter($idChapter)
 {
@@ -14,24 +16,20 @@ function getChapter($idChapter)
     if(isset($_GET['c']) && !empty([$_GET['c']]))
     {
         $showChapter = $chapterOne->showChapter($idChapter);
-
-        $comment = new \blog\app\models\CommentsManager();
-        $nbComment = $comment->nb_comment($idChapter);
-        $comments = $comment->showComments($idChapter);//false
+        $comm = new \blog\app\models\CommentsManager();
+        $comments = $comm->showComments($idChapter);
+        $nbComment = $comm->nb_comment($idChapter);
     }
-
-//    $chapter->nb_comment($idChapter);
-
-//    $comment = blog\app\models\Comments_Models();
-//
-//    $comment->getComments($idChapter);
-//    $getReports = countReportTotal();
 
     require ('app/views/showChapterView.php');
 }
 
 function postNewComment($content, $user, $chapterId)
 {
-    $newComment = postComm($content, $user, $chapterId);
-    header('Location: index.php?admin');
+        $comm = new \blog\app\models\Comments(['comments' => $content, 'userId' => $user, 'chapterId' => $chapterId]);
+        $newComment = new \blog\app\models\CommentsManager();
+        $newComment->postComment($comm);
+
+
+    header('Location: index.php?comm=add');
 }

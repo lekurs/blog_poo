@@ -15,6 +15,12 @@ class Autoload
     }
 
     static function autoloader($classname) {
-        require $classname. '.php';
+        $classname = str_replace('blog\\','',$classname);
+        $classname = str_replace('\\', '/', $classname);
+
+        if(file_exists($classname.'.php'))
+        {
+            require $classname. '.php';
+        }
     }
 }

@@ -85,7 +85,7 @@ class Chapters
         }
     }
 
-    public function setCreateDate($date)
+    public function setCreate_date($date)
     {
         $this->create_date = $date;
     }

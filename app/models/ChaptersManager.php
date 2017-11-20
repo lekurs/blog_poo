@@ -40,10 +40,10 @@ require_once ('Database.php');
      public function showChapter($idChapter)
      {
          $db = $this->Connect();
-         $req = $db->prepare('SELECT id_chapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS date_creation FROM chapter WHERE id_chapter = :idChapter');
+         $req = $db->prepare('SELECT id_chapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS create_date FROM chapter WHERE id_chapter = :idChapter');
          $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
          $req->execute();
-         $req->setFetchMode(\PDO::FETCH_OBJ);
+         $req->setFetchMode(\PDO::FETCH_CLASS, 'Chapters');
 
          return $req->fetchAll();
      }

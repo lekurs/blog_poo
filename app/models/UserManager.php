@@ -13,12 +13,15 @@ require_once ('Database.php');
 /**
  * Gestion des utilisateurs BDD
  * */
+
 class UserManager extends Database
 {
+
     /**
      * @param $email
-     * @param $password
+     * @return array
      */
+
     function login($email)
     {
         $db = $this->Connect();
@@ -35,24 +38,19 @@ class UserManager extends Database
     }
 
     /**
-     * @param $username
-     * @param $password
-     * @param $email
-     * @param $role
-     * @return array
+     * @param User $user
      */
 
-    function inscription($username, $password, $email, $role)
+    function inscription(User $user)
     {
       $db = $this->Connect();
       $req = $db->prepare('INSERT INTO user (username, password, email, role) VALUES (:username, :password, :email, :role)');
-      $req->bindValue('username', $username, \PDO::PARAM_STR);
-      $req->bindValue('password', $password, \PDO::PARAM_STR);
-      $req->bindValue('email', $email, \PDO::PARAM_STR);
-      $req->bindValue('role', $role, \PDO::PARAM_INT);
+      $req->bindValue('username', $user->username(), \PDO::PARAM_STR);
+      $req->bindValue('password', $user->password(), \PDO::PARAM_STR);
+      $req->bindValue('email', $user->email(), \PDO::PARAM_STR);
+      $req->bindValue('role', $user->role(), \PDO::PARAM_INT);
       $req->execute();
 
-      return $req;
     }
 
     /**
