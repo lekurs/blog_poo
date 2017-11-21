@@ -150,6 +150,25 @@ try{
         elseif ($_GET['action'] == 'adminuser')
         {
             updateUser();
+            if($_GET['up'] && $_GET['up'] == 'ok')
+            {
+                if(isset($_POST['idUser']) && isset($_POST['rankUser']))
+                {
+                    $idUser = htmlspecialchars($_POST['idUser']);
+                    $rankUser = htmlspecialchars($_POST['rankUser']);
+
+                    changeRankUser($idUser, $rankUser);
+
+                }
+            }
+        }
+        elseif ($_GET['action'] == 'deluser')
+        {
+            if(isset($_GET['u']) && !empty($_GET['u']))
+            {
+                $idUser = htmlspecialchars($_GET['u']);
+                deleteUser($idUser);
+            }
         }
         elseif ($_GET['action'] == 'forget')
         {

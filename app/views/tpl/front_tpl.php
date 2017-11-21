@@ -179,5 +179,6 @@ $allReports = new \blog\app\models\CommentsManager();
 <script src="assets/js/reportAjax.js"></script>
 <script src="assets/js/admin.js"></script>
 <script src="assets/js/forget_password.js"></script>
+<script src="assets/js/update-user.js"></script>
 </body>
 </html>

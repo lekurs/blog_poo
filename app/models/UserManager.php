@@ -8,8 +8,6 @@
 
 namespace blog\app\models;
 
-require_once ('Database.php');
-
 /**
  * Gestion des utilisateurs BDD
  * */
@@ -80,6 +78,10 @@ class UserManager extends Database
         return $req->fetchAll();
     }
 
+    /**
+     * @return array
+     */
+
     public function allUser()
     {
         $db = $this->Connect();
@@ -90,14 +92,44 @@ class UserManager extends Database
         return $req->fetchAll();
     }
 
+    /**
+     * @param $idRank
+     * @return array
+     */
+
     public function getRankUser($idRank)
     {
         $db = $this->Connect();
-        $req = $db->prepare('SELECT * FROM user WHERE role = :idRank ORDER BY role');
+        $req = $db->prepare('SELECT id_user AS idUser, username, password, email, role FROM user WHERE role = :idRank ORDER BY role');
         $req->bindValue('idRank', $idRank, \PDO::PARAM_INT);
         $req->execute();
         $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
 
         return $req->fetchAll();
+    }
+
+    /**
+     * @param User $user
+     */
+
+    public function upRankUser(User $user)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('UPDATE user SET role = :role WHERE id_user = :idUser');
+        $req->bindValue('role', $user->role(), \PDO::PARAM_INT);
+        $req->bindValue('idUser', $user->idUser(), \PDO::PARAM_INT);
+        $req->execute();
+
+        $req->closeCursor();
+    }
+
+    public function delUser(User $user)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('DELETE FROM user WHERE id_user = :idUser');
+        $req->bindValue('idUser', $user->idUser(), \PDO::PARAM_INT);
+        $req->execute();
+
+        $req->closeCursor();
     }
 }

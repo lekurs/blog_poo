@@ -873,6 +873,62 @@ span#forget_pass_hide {
     color: #311c21;
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: #311c21;
+    background-image: none;
+}
+
+.select {
+    position: relative;
+    display: block;
+    width: 90%;
+    height: 1.5em;
+    line-height: 1.5;
+    background: #311c21;
+    overflow: hidden;
+    border-radius: .25em;
+}
+
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0 1em;
+    background: #311c21;
+    pointer-events: none;
+    color: #fff;
+}
+
+select {
+    width: 90%;
+    height: 100%;
+    margin: 0;
+    padding: 0 ;
+    color: #fff;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+.select-contain {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.sub-user-circle > i {
+    color: #311c21;
+    cursor: pointer;
+}
+
 /* FOOTER */
 
 footer {

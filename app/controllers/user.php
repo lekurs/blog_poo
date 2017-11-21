@@ -57,6 +57,33 @@ function updateUser()
     $rankManager = new models\RankUserManager();
     $ranks = $rankManager->getRank();
 
-//    $userByRank = getAllUsersByRank($rankid);
     require ('app/views/adminUsers.php');
+}
+
+function changeRankUser($idUser, $rankUser)
+{
+    if(isset($_POST['idUser']) && isset($_POST['rankUser']))
+    {
+        $idUser = htmlspecialchars($_POST['idUser']);
+        $rankUser = htmlspecialchars($_POST['rankUser']);
+
+        $userManager = new models\UserManager();
+
+        $user = new models\User(['idUser' => $idUser, 'role' => $rankUser]);
+        $upUser = $userManager->upRankUser($user);
+    }
+}
+function deleteUser($idUser)
+{
+    if(isset($_GET['u']) && !empty($_GET['u']))
+    {
+        $idUser = $_GET['u'];
+
+        $userManager = new models\UserManager();
+
+        $user = new models\User(['idUser' => $idUser]);
+
+        $deluser = $userManager->delUser($user);
+        header('Location: index.php?action=adminuser&del=ok');
+    }
 }
