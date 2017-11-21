@@ -79,4 +79,25 @@ class UserManager extends Database
         $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
         return $req->fetchAll();
     }
+
+    public function allUser()
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('SELECT * FROM user ORDER BY role');
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
+
+        return $req->fetchAll();
+    }
+
+    public function getRankUser($idRank)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('SELECT * FROM user WHERE role = :idRank ORDER BY role');
+        $req->bindValue('idRank', $idRank, \PDO::PARAM_INT);
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'User');
+
+        return $req->fetchAll();
+    }
 }

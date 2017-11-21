@@ -30,9 +30,16 @@ function adminIndex()
 
 function adminReport()
 {
-    $menu = getMenus();
-    $report = getAllReportByChapter();
-    $getReports = countReportTotal();
+    $menuManager = new \blog\app\models\MenusManager();
+    $menu = $menuManager->getMenus();
+
+    $commentsManager = new models\CommentsManager();
+    $countReport = $commentsManager->countReportTotal();
+    $report = $commentsManager->getReportByChapter();
+//    $report = $commentsManager->getReportByChapter();
+
+//    $report = getAllReportByChapter();
+//    $getReports = countReportTotal();
 
     require ('app/views/adminReportView.php');
 }
@@ -42,8 +49,12 @@ function adminDelComm($comm)
     if(isset($_GET['comm']) && !empty($_GET['comm']))
     {
         $comm = htmlspecialchars($_GET['comm']);
-        $del = deleteComment($comm);
-        header('Location: index.php?action=admin');
+        $commentsManager = new models\CommentsManager();
+        $comment = new models\Comments(['idComments'=>$comm]);
+
+        $delete = $commentsManager->delComment($comment);
+
+        header('Location: index.php?action=admin&del='.$comm);
     }
 }
 
@@ -100,19 +111,24 @@ function adminDelChapter($chapterId)
 
 function adminUpdateComment($idComment, $comment)
 {
-    $updateComment = updateComment($idComment, $comment);
+    $commentUpdated = new models\Comments(['idComments' => $idComment, 'comments' => $comment]);
+    $commentManager = new models\CommentsManager();
+    $updateComment = $commentManager->updateComment($commentUpdated);
 }
 
-function adminGetComment()
+function adminGetComment($idComments)
 {
-    $menu = getMenus();
-    $comment = getComment();
-    $getReports = countReportTotal();
+    $menuManager = new \blog\app\models\MenusManager();
+    $menu = $menuManager->getMenus();
+
+    $commentsManager = new models\CommentsManager();
+    $comment = $commentsManager->showComment($idComments);
+
     if(isset($_POST['comments_area']) && !empty($_POST['comments_area']))
     {
         $idComment = htmlspecialchars($_GET['comm']);
-        $comments = htmlspecialchars($_POST['comments_area']);
-        adminUpdateComment($idComment, $comments);
+        $comment = htmlspecialchars($_POST['comments_area']);
+        adminUpdateComment($idComment, $comment);
 
     }
 

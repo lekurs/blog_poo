@@ -15,12 +15,12 @@ ob_start();
     <div class="admin-container">
         <div class="menus">
             <?php
-            foreach($menu as $menus)
-            {
-                ?>
-                <p><a href="<?php echo $menus['lien']; ?>" class="menus-btn"><?php echo $menus['menus']; ?></a></p>
-                <?php
-            }
+                foreach($menu as $datas) :
+                $menu = new \blog\app\models\Menus($datas);
+            ?>
+                <p><a href="<?php echo $menu->lien(); ?>" class="menus-btn"><?php echo $menu->menus(); ?></a></p>
+            <?php
+                endforeach;
             ?>
         </div>
         <div class="admin">
@@ -28,32 +28,33 @@ ob_start();
             <div class="recap-admin">
                 <div class="admin-chapters">
                     <h3>Messages signalés</h3>
+                    <table class="admin-comments-table">
+                        <thead>
+                        <tr>
+                            <th class="admin-number-comment-table">Chapitre</th>
+                            <th class="admin-comment">Message</th>
+                            <th class="admin-comment-update">Modif</th>
+                            <th class="admin-comment-delete">Suppr</th>
+                        </tr>
+                        </thead>
                     <?php
-                    foreach ($report as $chapter)
-                    {
+                        foreach ($report as $datas) :
+                            $comment = new \blog\app\models\Comments($datas);
+                            $chapter = new \blog\app\models\Chapters($datas);
                         ?>
-
-                        <table class="admin-comments-table">
-                            <thead>
-                            <tr>
-                                <th class="admin-number-comment-table">Chapitre</th>
-                                <th class="admin-comment">Message</th>
-                                <th class="admin-comment-update">Modif</th>
-                                <th class="admin-comment-delete">Suppr</th>
-                            </tr>
-                            </thead>
                             <tbody>
                             <tr class="inter-chapter-table">
-                                <td class="admin-number-comment-table"><?php echo $chapter['title']; ?></td>
-                                <td class="admin-comment"><?php echo $chapter['comments'] ;?></td>
-                                <td class="admin-comment-update"><a href="index.php?action=updatecomm&amp;comm=<?php echo $chapter['commentsId']; ?>"><i class="fa fa-pencil popin-comment"></i></a></td>
-                                <td class="admin-comment-delete"><a href="index.php?action=delcomm&amp;comm=<?= $chapter['commentsId'];?>"><i class="fa fa-trash"></i></a></td>
+                                <td class="admin-number-comment-table"><?= $chapter->title(); ?></td>
+                                <td class="admin-comment"><?= $comment->comments() ;?></td>
+                                <td class="admin-comment-update"><a href="index.php?action=updatecomm&amp;comm=<?= $comment->idComments(); ?>"><i class="fa fa-pencil popin-comment"></i></a></td>
+                                <td class="admin-comment-delete"><a href="index.php?action=delcomm&amp;comm=<?= $comment->idComments();?>"><i class="fa fa-trash"></i></a></td>
                             </tr>
                             </tbody>
-                        </table>
+
                         <?php
-                    }
+                    endforeach;
                     ?>
+                    </table>
                 </div>
             </div>
         </div>

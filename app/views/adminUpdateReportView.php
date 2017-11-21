@@ -14,12 +14,12 @@ ob_start();
     <div class="admin-container">
         <div class="menus">
             <?php
-            foreach($menu as $menus)
-            {
-                ?>
-                <p><a href="<?php echo $menus['lien']; ?>" class="menus-btn"><?php echo $menus['menus']; ?></a></p>
-                <?php
-            }
+                foreach($menu as $datas) :
+                $menus = new \blog\app\models\Menus($datas)
+            ?>
+                <p><a href="<?= $menus->lien(); ?>" class="menus-btn"><?= $menus->menus(); ?></a></p>
+            <?php
+                endforeach;
             ?>
         </div>
         <div class="admin">
@@ -27,15 +27,15 @@ ob_start();
             <div class="recap-admin">
                 <h3>Messages signalés</h3>
                 <?php
-                foreach ($comment as $comments)
-                {
+                    foreach ($comment as $datas) :
+                        $comments = new \blog\app\models\Comments($datas);
                     ?>
-                    <form action="index.php?action=updatecomm&amp;comm=<?= $comments['id_comments'];?>" method="post">
-                        <textarea id="comments_area" name="comments_area"><?= $comments['comments']; ?></textarea>
+                    <form action="index.php?action=adminreport&update=ok" method="post">
+                        <textarea id="comments_area" name="comments_area"><?= $comments->comments(); ?></textarea>
                         <p><input type="submit" value="Mettre à jour" class="sub-btn"></p>
                     </form>
-                    <?php
-                }
+                <?php
+                    endforeach;
                 ?>
             </div>
         </div>

@@ -171,7 +171,7 @@ $allReports = new \blog\app\models\CommentsManager();
             </div>
         </footer>
     </div>
-<script src="assets/js/jquery.js"></script>
+<script src="assets/js/jquery-min.js"></script>
 <script src="assets/js/suscribe.js"></script>
 <script src="assets/js/login.js"></script>
 <script src="assets/js/check_login.js"></script>

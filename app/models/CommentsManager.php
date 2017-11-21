@@ -8,8 +8,6 @@
 
 namespace blog\app\models;
 
-require_once ('app/models/Database.php');
-
 class CommentsManager extends Database
 {
 
@@ -30,6 +28,22 @@ class CommentsManager extends Database
     }
 
     /**
+     * @param $idComments
+     * @return array
+     */
+
+    public function showComment($idComments)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare(' SELECT id_comments AS idComments, comments, report FROM comments WHERE id_comments =:idComm');
+        $req->bindValue('idComm', $idComments, \PDO::PARAM_INT);
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+
+        return $req->fetchAll();
+    }
+
+    /**
      * @param $chapter
      * @return int
      */
@@ -43,6 +57,10 @@ class CommentsManager extends Database
         return $req->rowCount();
     }
 
+    /**
+     * @return int
+     */
+
     public function countReportTotal()
     {
         $db = $this->Connect();
@@ -51,6 +69,10 @@ class CommentsManager extends Database
 
         return $req->rowCount();
     }
+
+    /**
+     * @param Comments $comments
+     */
 
     public function postComment(Comments $comments)
     {
@@ -63,6 +85,11 @@ class CommentsManager extends Database
         $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
     }
 
+    /**
+     * @param $idChapter
+     * @return int
+     */
+
     public function countReportByChapter($idChapter)
     {
         $db = $this->Connect();
@@ -74,6 +101,10 @@ class CommentsManager extends Database
         return $req->rowCount();
     }
 
+    /**
+     * @return int
+     */
+
     public function countAllReport()
     {
         $db = $this->Connect();
@@ -82,5 +113,41 @@ class CommentsManager extends Database
         $req->execute();
 
         return $req->rowCount();
+    }
+
+    /**
+     * @param Chapters $chapter
+     * @return array
+     */
+
+    public function getReportByChapter()
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('SELECT ch.id_chapter AS idChapter,  comm.chapter_id AS chapterId, comm.id_comments AS idComments, ch.title AS title, comm.comments, comm.user_id, comm.report FROM comments comm INNER JOIN chapter ch ON ch.id_chapter = comm.chapter_id WHERE comm.report = 1 ORDER BY  comm.chapter_id');
+        $req->execute();
+        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+
+        return $req->fetchAll();
+    }
+
+    public function updateComment(Comments $comments)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('UPDATE comments SET comments = :comment, report = 0 WHERE id_comments = :idComment');
+        $req->bindValue('comment', $comments->comments(), \PDO::PARAM_STR);
+        $req->bindValue('idComment', $comments->idComments(), \PDO::PARAM_INT);
+        $req->execute();
+
+        $req->closeCursor();
+    }
+
+    public function delComment(Comments $comments)
+    {
+        $db = $this->Connect();
+        $req = $db->prepare('DELETE FROM comments WHERE id_comments = :idComment');
+        $req->bindValue('idComment', $comments->idComments(), \PDO::PARAM_INT);
+        $req->execute();
+
+        $req->closeCursor();
     }
 }

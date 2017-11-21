@@ -45,3 +45,18 @@ function suscribe($username, $password, $email, $role)
 
     header('Location: index.php?adduser=ok');
 }
+
+function updateUser()
+{
+    $menusManager = new models\MenusManager();
+    $menu = $menusManager->getMenus();
+
+    $usersManager = new models\UserManager();
+
+
+    $rankManager = new models\RankUserManager();
+    $ranks = $rankManager->getRank();
+
+//    $userByRank = getAllUsersByRank($rankid);
+    require ('app/views/adminUsers.php');
+}

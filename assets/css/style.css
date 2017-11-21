@@ -47,6 +47,12 @@ h1, h2, h3, h4 {
     text-decoration: none;
 }
 
+.connexion-container a:hover {
+    color: #311c21;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
 .login-name {
     color: #fff;
     font-weight: 800;
@@ -608,6 +614,7 @@ table th {
 
 .inter-chapter-table {
     border-bottom: 1px solid #adadad;
+    height: 60px;
 }
 
 .admin-chapter-update {
@@ -804,15 +811,18 @@ input:checked +.slider:before {
 .admin-number-comment-table {
     width: 20%;
     text-align: center;
+    border-bottom: 1px solid #adadad;
 }
 
 .admin-comment {
     width: 60%;
+    border-bottom: 1px solid #adadad;
 }
 
 .admin-comment-update {
      width: 10%;
      text-align: center;
+    border-bottom: 1px solid #adadad;
  }
 
 .admin-comment-update >a {
@@ -828,6 +838,7 @@ input:checked +.slider:before {
 .admin-comment-delete {
     width: 10%;
     text-align: center;
+    border-bottom: 1px solid #adadad;
 }
 
 .admin-comment-delete > a {
