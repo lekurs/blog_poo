@@ -87,3 +87,10 @@ function deleteUser($idUser)
         header('Location: index.php?action=adminuser&del=ok');
     }
 }
+
+function forgetPassword()
+{
+    $form = new models\Form();
+
+    require 'app/views/forgetPassView.php';
+}

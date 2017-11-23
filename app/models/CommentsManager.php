@@ -7,6 +7,7 @@
  */
 
 namespace blog\app\models;
+use \PDO;
 
 class CommentsManager extends Database
 {
@@ -20,9 +21,9 @@ class CommentsManager extends Database
     {
         $db = $this->Connect();
         $req = $db->prepare('SELECT c.id_comments AS idComments, c.comments AS comments, c.report AS report, c.user_id AS userId, c.chapter_id AS chapterId, u.username AS username FROM comments AS c INNER JOIN  user AS u ON c.user_id = u.id_user WHERE c.chapter_id = :idChapter');
-        $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
+        $req->bindValue(':idChapter', $idChapter, PDO::PARAM_INT);
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'Comments');
 
         return $req->fetchAll();
     }
@@ -36,9 +37,9 @@ class CommentsManager extends Database
     {
         $db = $this->Connect();
         $req = $db->prepare(' SELECT id_comments AS idComments, comments, report FROM comments WHERE id_comments =:idComm');
-        $req->bindValue('idComm', $idComments, \PDO::PARAM_INT);
+        $req->bindValue('idComm', $idComments, PDO::PARAM_INT);
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'Comments');
 
         return $req->fetchAll();
     }
@@ -78,11 +79,12 @@ class CommentsManager extends Database
     {
         $db = $this->Connect();
         $req = $db->prepare('INSERT INTO comments (comments, user_id, chapter_id) VALUES (:comments, :userId, :chapterId)');
-        $req->bindValue('comments', $comments->comments(), \PDO::PARAM_STR);
-        $req->bindValue('userId', $comments->userId(), \PDO::PARAM_INT);
-        $req->bindValue('chapterId', $comments->chapterId(), \PDO::PARAM_INT);
+        $req->bindValue('comments', $comments->comments(), PDO::PARAM_STR);
+        $req->bindValue('userId', $comments->userId(), PDO::PARAM_INT);
+        $req->bindValue('chapterId', $comments->chapterId(), PDO::PARAM_INT);
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+
+        $req->closeCursor();
     }
 
     /**
@@ -95,7 +97,7 @@ class CommentsManager extends Database
         $db = $this->Connect();
 
         $req = $db->prepare('SELECT * FROM comments WHERE chapter_id = :idChapter');
-        $req->bindValue('idChapter', $idChapter, \PDO::PARAM_INT);
+        $req->bindValue('idChapter', $idChapter, PDO::PARAM_INT);
         $req->execute();
 
         return $req->rowCount();
@@ -125,7 +127,7 @@ class CommentsManager extends Database
         $db = $this->Connect();
         $req = $db->prepare('SELECT ch.id_chapter AS idChapter,  comm.chapter_id AS chapterId, comm.id_comments AS idComments, ch.title AS title, comm.comments, comm.user_id, comm.report FROM comments comm INNER JOIN chapter ch ON ch.id_chapter = comm.chapter_id WHERE comm.report = 1 ORDER BY  comm.chapter_id');
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'Comments');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'Comments');
 
         return $req->fetchAll();
     }
@@ -134,8 +136,8 @@ class CommentsManager extends Database
     {
         $db = $this->Connect();
         $req = $db->prepare('UPDATE comments SET comments = :comment, report = 0 WHERE id_comments = :idComment');
-        $req->bindValue('comment', $comments->comments(), \PDO::PARAM_STR);
-        $req->bindValue('idComment', $comments->idComments(), \PDO::PARAM_INT);
+        $req->bindValue('comment', $comments->comments(), PDO::PARAM_STR);
+        $req->bindValue('idComment', $comments->idComments(), PDO::PARAM_INT);
         $req->execute();
 
         $req->closeCursor();
@@ -145,7 +147,7 @@ class CommentsManager extends Database
     {
         $db = $this->Connect();
         $req = $db->prepare('DELETE FROM comments WHERE id_comments = :idComment');
-        $req->bindValue('idComment', $comments->idComments(), \PDO::PARAM_INT);
+        $req->bindValue('idComment', $comments->idComments(), PDO::PARAM_INT);
         $req->execute();
 
         $req->closeCursor();

@@ -16,6 +16,18 @@ ob_start();
       <p id="input_forget_pass"><input type="email" name="email_forget" id="email_forget" placeholder="Tapez votre email" /><span id="forget_pass_hide"></span></p>
       <p><input type="submit" value="Envoyez" class="sub-btn"></p>
   </form>
+
+    <form action="#" method="post">
+        <?= $form->input('text', 'test', 'test', 'test') ;?>
+        <?= $form->input('text', 'test2, test2', 'test2') ; ?>
+        <?= $form->area('area', 'test d\'un textarea'); ?>
+        <?= $form->checkBox('test', 'test', 'test'); ?>
+        <?= $form->radio('test', 'test'); ?>
+        <?= $form->select('test'); ?>
+        <?php $form->optSelect(['test' => 'test', 'test2' => 'test2']); ?>
+        <?php var_dump($form->getOptions()); ?>
+        <?= $form->submit('testsub', 'Envoyer', 'sub-btn'); ?>
+    </form>
 </section>
 
 <?php

@@ -7,6 +7,7 @@
  */
 
 namespace blog\app\models;
+use \PDO;
 
 
 class RankUserManager extends Database
@@ -17,7 +18,7 @@ class RankUserManager extends Database
         $db = $this->Connect();
         $req = $db->prepare('SELECT * from role ORDER BY role');
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'RankUser');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'RankUser');
 
         return $req->fetchAll();
     }

@@ -7,7 +7,7 @@
  */
 
 namespace blog\app\models;
-
+use \PDO;
 require_once ('Database.php');
 
 /**
@@ -27,7 +27,7 @@ require_once ('Database.php');
         $db = $this->Connect();
         $req = $db->prepare('SELECT id_chapter as idChapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS create_date, online FROM chapter where online = 1 ORDER BY id_chapter');
         $req->execute();
-        $req->setFetchMode(\PDO::FETCH_CLASS, 'Chapters');
+        $req->setFetchMode(PDO::FETCH_CLASS, 'Chapters');
 
         return $req->fetchAll();
     }
@@ -43,7 +43,7 @@ require_once ('Database.php');
          $req = $db->prepare('SELECT id_chapter AS idChapter, title, chapter, DATE_FORMAT(create_date, \'%d/%M/%Y\') AS create_date, online FROM chapter WHERE id_chapter = :idChapter');
          $req->bindValue(':idChapter', $idChapter, \PDO::PARAM_INT);
          $req->execute();
-         $req->setFetchMode(\PDO::FETCH_CLASS, 'Chapters');
+         $req->setFetchMode(PDO::FETCH_CLASS, 'Chapters');
 
          return $req->fetchAll();
      }
@@ -68,9 +68,9 @@ require_once ('Database.php');
      {
          $db = $this->Connect();
          $req = $db->prepare('INSERT INTO chapter (title, chapter, create_date, online) VALUES (:title, :chapter, NOW(), :online)');
-         $req->bindValue(':title', $chapter->title(), \PDO::PARAM_STR);
-         $req->bindValue(':chapter', $chapter->chapter(), \PDO::PARAM_STR);
-         $req->bindValue(':online', $chapter->online(), \PDO::PARAM_INT);
+         $req->bindValue(':title', $chapter->title(), PDO::PARAM_STR);
+         $req->bindValue(':chapter', $chapter->chapter(), PDO::PARAM_STR);
+         $req->bindValue(':online', $chapter->online(), PDO::PARAM_INT);
 
          $req->execute();
 
@@ -100,7 +100,7 @@ require_once ('Database.php');
 
          $req = $db->prepare('SELECT id_chapter AS idChapter, title, chapter, DATE_FORMAT(create_date, \'%d/%m/%Y\') AS date_create, online FROM chapter WHERE online = 0 ORDER BY id_chapter');
          $req->execute();
-         $req->setFetchMode(\PDO::FETCH_CLASS, 'Chapters');
+         $req->setFetchMode(PDO::FETCH_CLASS, 'Chapters');
 
          return $req->fetchAll();
      }
@@ -113,10 +113,10 @@ require_once ('Database.php');
      {
          $db = $this->Connect();
          $req = $db->prepare('UPDATE chapter SET title = :title, chapter = :chapter, create_date =NOW(), online = :online WHERE id_chapter = :chapterId');
-         $req->bindValue(':title', $chapter->title(), \PDO::PARAM_STR);
-         $req->bindValue(':chapter', $chapter->chapter(), \PDO::PARAM_STR);
-         $req->bindValue(':online', $chapter->online(), \PDO::PARAM_INT);
-         $req->bindValue('chapterId', $chapter->idChapter(), \PDO::PARAM_INT);
+         $req->bindValue(':title', $chapter->title(), PDO::PARAM_STR);
+         $req->bindValue(':chapter', $chapter->chapter(), PDO::PARAM_STR);
+         $req->bindValue(':online', $chapter->online(), PDO::PARAM_INT);
+         $req->bindValue('chapterId', $chapter->idChapter(), PDO::PARAM_INT);
          $req->execute();
 
          $req->closeCursor();

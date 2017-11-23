@@ -15,8 +15,8 @@ class Database extends Config
 {
     public function Connect()
     {
-        $db = new \PDO('mysql:host=' . $this->host . '; dbname=' . $this->dbname.'; charset=utf8', $this->user, $this->password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+        $db = new PDO('mysql:host=' . $this->host . '; dbname=' . $this->dbname.'; charset=utf8', $this->user, $this->password, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         return $db;
-        throw new \Exception('erreur');
+        throw new Exception('erreur');
     }
 }

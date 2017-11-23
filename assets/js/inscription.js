@@ -43,7 +43,7 @@ jQuery(document).ready(function ($) {
     $('.regex-password').hide();
     $('input#password_suscribe').on('focus', function (event) {
         var pass = event.target.value;
-        var regexPass = /^[A-Z]+.[a-zA-Z?!\/\\:;.,§&é"'(-è_çà)=+]+.\d\S/;
+        var regexPass = /^[A-Z]+[a-zA-Z0-9?!\/\\,;:!{}[\]()-_@.]\S/;
         if(!regexPass.test(pass))
         {
             var mailValide = "Première lettre en Majuscule ou un caractère spécial. <br> 8 caractères minimum et sans espace";

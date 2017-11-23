@@ -6,6 +6,7 @@
  * Time: 10:41
  */
 $allReports = new \blog\app\models\CommentsManager();
+
 ?>
 
 <!DOCTYPE html>
